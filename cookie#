@@ -1,0 +1,144 @@
+📘 CAHIER DE CHARGE (BASÉ SUR TA BASE DE DONNÉES)
+🎯 1. OBJECTIF DU PROJET
+
+Développer une application web permettant à plusieurs écoles primaires de gérer :
+
+les utilisateurs (admin, enseignants, parents)
+les élèves
+les classes
+les matières
+les notes
+les paiements
+
+👉 Chaque école fonctionne de manière indépendante grâce à ecole_id.
+
+🧩 2. ACTEURS DU SYSTÈME
+
+
+🔹 Super Admin
+Gère toutes les écoles
+Crée les écoles
+Accès global
+🔹 Admin (école)
+
+Gère son école uniquement
+Crée enseignants, parents, élèves
+Gère classes, matières, paiements
+🔹 Enseignant
+
+Consulte ses classes
+Saisit les notes
+🔹 Parent
+
+Consulte les notes de ses enfants
+Consulte les paiements
+🧱 3. MODULES FONCTIONNELS
+
+🔐 3.1 Authentification (table users)
+
+Fonctionnalités :
+Connexion (email + password)
+Gestion des rôles :
+super_admin
+admin
+enseignant
+parent
+Contraintes :
+Mot de passe hashé
+Session avec ecole_id
+
+🏫 3.2 Gestion des écoles (table ecoles)
+
+Super Admin :
+Créer une école
+Modifier une école
+Supprimer une école
+
+👤 3.3 Gestion des utilisateurs (table users)
+
+Admin école :
+Ajouter enseignant
+Ajouter parent
+Modifier utilisateur
+Supprimer utilisateur
+Règles :
+Chaque user appartient à UNE école
+Email unique
+
+🏫 3.4 Gestion des classes (table classes)
+
+Fonctionnalités :
+Créer classe (CP1 → CM2)
+Affecter un enseignant
+Règles :
+Une classe appartient à une école
+Un enseignant peut avoir plusieurs classes
+
+👶 3.5 Gestion des élèves (table eleves)
+
+Fonctionnalités :
+Ajouter élève
+Affecter à une classe
+Associer un parent
+Champs importants :
+matricule (unique)
+classe_id
+parent_id
+Règles :
+Un parent peut avoir plusieurs enfants
+
+📚 3.6 Gestion des matières (table matieres)
+
+Fonctionnalités :
+Ajouter matière
+Définir coefficient
+Exemple :
+Français (coef 2)
+Maths (coef 3)
+
+📝 3.7 Gestion des notes (table notes)
+
+Fonctionnalités :
+Saisie des notes par enseignant
+Choix :
+élève
+matière
+trimestre (T1, T2, T3, T4)
+Traitements :
+Calcul moyenne par matière
+Calcul moyenne générale :
+Somme(note × coef) / Somme coef
+Règles :
+Une note appartient à :
+un élève
+une matière
+un trimestre
+
+💰 3.8 Gestion des paiements (table paiements)
+
+Fonctionnalités :
+Enregistrer paiement
+Voir historique
+Statuts :
+payé
+partiel
+impayé
+
+
+#logique metier
+
+Authentification
+Écoles (super admin)
+Users
+Classes
+Élèves
+Matières
+On attaque   
+
+Inscriptions — inscrire un élève dans une classe
+Annees — gestion des années scolaires
+Compositions — gestion des compositions
+Notes — saisie des notes
+Paiements — gestion des paiements
+Scolarités — frais par classe et année
+facture -- tirer la facture apres chaque paiements
